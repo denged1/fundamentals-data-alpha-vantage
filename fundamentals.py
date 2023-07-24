@@ -1,6 +1,7 @@
 from alpha_vantage.fundamentaldata import FundamentalData
 import pandas as pd
 import time
+import yfinance as yf
 
 key = 'TYPE_YOUR_API_KEY_HERE'
 
@@ -14,12 +15,20 @@ def getAnnualData(ticker, apiKey):
     return overview, income, balance, cashflow
 
 def processData(overview, income, balance, cashflow):
+    #I used the yfinance library to get the current price of the stock to compare with the analyst targets
+    symbol = overview['Symbol'][0]
+    stock = yf.Ticker(symbol)
+    datas = stock.history()
+    last_quote = datas['Close'].iloc[-1]
+    row_data = pd.DataFrame({'Symbol': symbol, 'last_quote': last_quote}, index=[0])
 #########################################################----Overview----#########################################################
     # Select required columns from overview
-    overview_columns = ['Symbol', 'Sector', 'AnalystTargetPrice', 'MarketCapitalization', 'RevenueTTM', 'ReturnOnAssetsTTM', 
+    overview_columns = ['AnalystTargetPrice', 'Sector', 'MarketCapitalization', 'RevenueTTM', 'ReturnOnAssetsTTM', 
                         'ReturnOnEquityTTM', 'EBITDA', 'ProfitMargin', 'OperatingMarginTTM',
                         'GrossProfitTTM', 'DividendYield']
-    row_data = overview[overview_columns].reset_index(drop=True)
+    overview_df = overview[overview_columns].reset_index(drop=True)
+    row_data = pd.concat([row_data, overview_df], axis=1)
+    
 #########################################################----Income----#########################################################
     # Calculate 3-year revenue growth rate
     try:
@@ -72,5 +81,5 @@ def compareStocks(tickerList, apiKey, freeApi = False):
             time.sleep(61)
     allData.to_csv('compareTickers.csv', index=False)
 
-tickList = ["MSFT", "AAPL", "NVDA", "AMZN", "META"]
+tickList = ["MSFT", "AAPL", "NVDA", "AMZN", "META", "TSLA", "GOOG", "DIS", "BABA", "JPM" ]
 compareStocks(tickList, key, freeApi=True)

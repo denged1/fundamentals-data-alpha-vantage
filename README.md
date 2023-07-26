@@ -6,16 +6,18 @@ This code requires you to register an account with Alpha Vantage and get an API 
 
 This code is highly customizable, we first get all the data using the ```getAnnualData()``` function. This actually has all the data that we need but there's just too much to use. Some information simply isn't relevant for our purposes, the ```processData()``` function only keeps the metrics that we are interested in. I've put comments denoting which sections are processing which sections (company_overview, income_statement, balance_sheet, or cash_flow). My code is an example of metrics that I'm interested in, if you want to switch metrics go to the documentation here: https://www.alphavantage.co/documentation/#fundamentals. If you click on the example outputs linked below each section, you can see exactly which metrics are outputted and what they're called. (example for the company overview: https://www.alphavantage.co/query?function=OVERVIEW&symbol=IBM&apikey=demo)
 
-##Results
+## Results
 
 I wrote code to collect fundamentals data that I'm interested in when looking at companies. I wanted the following metrics:
-```['Symbol', 'last_quote', 'AnalystTargetPrice', 'Sector',
+```
+['Symbol', 'last_quote', 'AnalystTargetPrice', 'Sector',
        'MarketCapitalization', 'RevenueTTM', 'ReturnOnAssetsTTM',
        'ReturnOnEquityTTM', 'EBITDA', 'ProfitMargin', 'OperatingMarginTTM',
        'GrossProfitTTM', 'DividendYield', 'RevenueGrowth3YrPct',
        'COGSGrowth3YrPct', 'totalAssets', 'totalLiabilities',
        'cashAndShortTermInvestments', 'operatingCashflow',
-       'capitalExpenditures']```
+       'capitalExpenditures']
+```
 
 
 

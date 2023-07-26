@@ -2,9 +2,22 @@
 
 Evaluating fundamentals data is often a key step in picking good companies to invest your money in. Investors often care about operating margins, EBITA, ROE, revenue growth rate, liabilities, and other key metrics to determine a company's financial health. However, comparing fundamentals data between companies is often a tedious affair that is slow and time-consuming. I've written a Python script that uses the Alpha Vantage API to gather fundamentals data for any given list of companies and compile it into a CSV file for easy comparison.
 
-This code requires you to register an account with Alpha Vantage and get an API key, additionally, I'm using the Alpha vantage library. You can easily install it using ```pip install alpha_vantage```. They offer several different plans, luckily one of them is free. However, it has rate limits of a max of 5 api calls in a minute. (The paid plan doesn't have rate limits.) When you call the function you can customize for which plan you have. This script will sleep for 61 seconds between tickers, which adds up fast. If you are going to be comparing a lot of data or companies, I would recommend paying for the API as the time adds up quick
+This code requires you to register an account with Alpha Vantage and get an API key, additionally, I'm using the Alpha vantage library. You can easily install it using ```pip install alpha_vantage```. They offer a free plan, however, it has rate limits of a max of 5 api calls in a minute and 500 max daily. There are also paid subscription tiers that range from 75 to 1200 API calls per minute (all paid plans have unlimited daily calls). When you call the function you can customize for which plan you have. This script will sleep for 61 seconds between tickers, which adds up fast. If you are going to be comparing a lot of data or companies, I would recommend paying for the API.
 
 This code is highly customizable, we first get all the data using the ```getAnnualData()``` function. This actually has all the data that we need but there's just too much to use. Some information simply isn't relevant for our purposes, the ```processData()``` function only keeps the metrics that we are interested in. I've put comments denoting which sections are processing which sections (company_overview, income_statement, balance_sheet, or cash_flow). My code is an example of metrics that I'm interested in, if you want to switch metrics go to the documentation here: https://www.alphavantage.co/documentation/#fundamentals. If you click on the example outputs linked below each section, you can see exactly which metrics are outputted and what they're called. (example for the company overview: https://www.alphavantage.co/query?function=OVERVIEW&symbol=IBM&apikey=demo)
+
+##Results
+
+I wrote code to collect fundamentals data that I'm interested in when looking at companies. I wanted the following metrics:
+```['Symbol', 'last_quote', 'AnalystTargetPrice', 'Sector',
+       'MarketCapitalization', 'RevenueTTM', 'ReturnOnAssetsTTM',
+       'ReturnOnEquityTTM', 'EBITDA', 'ProfitMargin', 'OperatingMarginTTM',
+       'GrossProfitTTM', 'DividendYield', 'RevenueGrowth3YrPct',
+       'COGSGrowth3YrPct', 'totalAssets', 'totalLiabilities',
+       'cashAndShortTermInvestments', 'operatingCashflow',
+       'capitalExpenditures']```
+
+
 
 I attached the Python code and a CSV file of the corresponding output.
 
